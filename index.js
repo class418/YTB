@@ -6,6 +6,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("サーバーは動いています");
+});
+
 app.post("/getVideoUrl", async (req, res) => {
   const { url } = req.body;
 
@@ -15,7 +19,6 @@ app.post("/getVideoUrl", async (req, res) => {
 
   try {
     const info = await ytdl.getInfo(url);
-    // フォーマットの中からmp4の最高画質を探す
     const format = ytdl.chooseFormat(info.formats, { quality: "highestvideo", filter: "videoonly" });
 
     if (!format || !format.url) {

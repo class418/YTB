@@ -14,11 +14,12 @@
   <script>
     async function loadVideo() {
       const url = document.getElementById("youtubeUrl").value;
-      const res = await fetch("/getVideoUrl", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
-      });
+      const res = await fetch("https://ytb-owgc.onrender.com/getVideoUrl", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ url }),
+});
+
       const data = await res.json();
       if (data.videoUrl) {
         document.getElementById("videoPlayer").src = data.videoUrl;

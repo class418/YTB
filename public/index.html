@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>YouTube直リンク動画再生</title>
+</head>
+<body>
+  <input type="text" id="youtubeUrl" placeholder="YouTubeのURLを入れてください" style="width:300px;">
+  <button onclick="loadVideo()">動画を表示</button>
+
+  <br><br>
+  <video controls width="560" id="videoPlayer"></video>
+
+  <script>
+    async function loadVideo() {
+      const url = document.getElementById("youtubeUrl").value;
+      const res = await fetch("/getVideoUrl", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+      const data = await res.json();
+      if (data.videoUrl) {
+        document.getElementById("videoPlayer").src = data.videoUrl;
+      } else {
+        alert(data.error || "エラーが発生しました");
+      }
+    }
+  </script>
+</body>
+</html>

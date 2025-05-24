@@ -8,6 +8,8 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.post("/getVideoUrl", async (req, res) => {
+  console.log("POST /getVideoUrl 受信:", req.body.url);  // 追加したログ
+
   const { url } = req.body;
   if (!ytdl.validateURL(url)) {
     return res.status(400).json({ error: "無効なYouTube URLです" });
@@ -23,6 +25,7 @@ app.post("/getVideoUrl", async (req, res) => {
     }
     res.json({ videoUrl: format.url });
   } catch (e) {
+    console.error("動画情報取得失敗:", e); // エラーもログ出すとよいです
     res.status(500).json({ error: "取得失敗しました" });
   }
 });
